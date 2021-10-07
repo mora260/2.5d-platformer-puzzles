@@ -10,6 +10,12 @@ public class Elevator : MonoBehaviour
     private float _speed = 3.0f;
     private bool _goingDown = false;
 
+    public bool ElevatorDir {
+      get {
+        return _goingDown;
+      }
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()

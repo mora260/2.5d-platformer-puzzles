@@ -27,8 +27,13 @@ public class ElevatorPanel : MonoBehaviour
           if (Input.GetKeyDown(KeyCode.E)) {
             Player p = GameObject.Find("Player").GetComponent<Player>();
             if (p && p.Coins >= _coinAmount) {
-              item.material.color = Color.green;
               _elevator.InteractWithElevator();
+              if (_elevator.ElevatorDir) {
+                item.material.color = Color.green;
+              } else {
+                item.material.color = Color.red;
+              }
+              
             }
           }
         }
