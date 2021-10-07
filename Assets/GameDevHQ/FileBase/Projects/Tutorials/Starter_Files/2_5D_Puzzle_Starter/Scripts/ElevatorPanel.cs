@@ -6,6 +6,9 @@ public class ElevatorPanel : MonoBehaviour
 {
   private bool _pressable;
 
+  [SerializeField]
+  private int _coinAmount;
+
   private void Update() {
     if (_pressable) {
       MeshRenderer[] button = GetComponentsInChildren<MeshRenderer>();
@@ -13,7 +16,10 @@ public class ElevatorPanel : MonoBehaviour
       {
         if(item.tag == "ElevatorLight") {
           if (Input.GetKeyDown(KeyCode.E)) {
-            item.material.color = Color.green;
+            Player p = GameObject.Find("Player").GetComponent<Player>();
+            if (p && p.Coins >= _coinAmount) {
+              item.material.color = Color.green;
+            }
           }
         }
       }
@@ -27,7 +33,6 @@ public class ElevatorPanel : MonoBehaviour
 
   private void OnTriggerExit(Collider other) {
     if (other.tag == "Player") {
-      Debug.Log("bye");
       _pressable = false;        
     }    
   }

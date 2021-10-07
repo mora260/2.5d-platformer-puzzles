@@ -20,6 +20,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
 
+    public int Coins {
+      get {
+        return _coins;
+      }
+      set {
+        _coins = value;
+      }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
