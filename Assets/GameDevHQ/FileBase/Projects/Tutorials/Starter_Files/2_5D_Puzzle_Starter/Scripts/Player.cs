@@ -20,6 +20,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
 
+    private bool _wallJumping;
+
+    private Vector3 _lastWallHitNormal;
+
+    private float _justWallJumped;
+
+    private float _velocityXWallJump;
+
     public int Coins {
       get {
         return _coins;
@@ -29,9 +37,19 @@ public class Player : MonoBehaviour
       }
     }
 
+    public bool WallJumping {
+      get {
+        return _wallJumping;
+      }
+      set {
+        _wallJumping = value;
+      }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        _justWallJumped = 0;
         _controller = GetComponent<CharacterController>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
@@ -48,10 +66,10 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 direction = new Vector3(horizontalInput, 0, 0);
-        Vector3 velocity = direction * _speed;
 
         if (_controller.isGrounded == true)
         {
+            _velocityXWallJump = 0;
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _yVelocity = _jumpHeight;
@@ -62,6 +80,13 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if (_wallJumping) {
+                  _yVelocity = _jumpHeight * 0.8f;
+                  _velocityXWallJump = _lastWallHitNormal.x * _speed;
+                  _canDoubleJump = false;
+                  _justWallJumped = 0.3f;
+                }
+
                 if (_canDoubleJump == true)
                 {
                     _yVelocity = _jumpHeight;
@@ -72,9 +97,34 @@ public class Player : MonoBehaviour
             _yVelocity -= _gravity * Time.deltaTime;
         }
 
-        velocity.y = _yVelocity;
+        if (_justWallJumped == 0) {
+          if (direction.x != 0) {
+            _velocityXWallJump = 0;
+          }
+          Vector3 velocity = direction * _speed;
+          velocity.y = _yVelocity;
+          _controller.Move(velocity * Time.deltaTime);
+        } else if (_justWallJumped > 0) {
+          _justWallJumped-=Time.deltaTime;
+          if (_justWallJumped < 0) {
+            _justWallJumped = 0;
+          }
+        }
 
-        _controller.Move(velocity * Time.deltaTime);
+        if ( _velocityXWallJump != 0) {
+          _controller.Move(new Vector3(_velocityXWallJump, _yVelocity, 0) * Time.deltaTime);
+          if (_velocityXWallJump > 0) {
+            _velocityXWallJump-=Time.deltaTime;
+            if (_velocityXWallJump < 0) {
+              _velocityXWallJump = 0;
+            }
+          } else {
+            _velocityXWallJump+=Time.deltaTime;
+            if (_velocityXWallJump > 0) {
+              _velocityXWallJump = 0;
+            }
+          }
+        }
     }
 
     public void AddCoins()
@@ -94,5 +144,11 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+      if (hit.gameObject.tag == "Wall") {
+        _lastWallHitNormal = hit.normal;
+      }
     }
 }
