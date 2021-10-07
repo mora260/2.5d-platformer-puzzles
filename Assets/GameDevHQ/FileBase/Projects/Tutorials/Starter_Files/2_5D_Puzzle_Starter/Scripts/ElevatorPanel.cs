@@ -9,6 +9,15 @@ public class ElevatorPanel : MonoBehaviour
   [SerializeField]
   private int _coinAmount;
 
+  private Elevator _elevator;
+
+  private void Start() {
+    _elevator = GameObject.Find("Elevator").GetComponent<Elevator>();
+    if (_elevator == null) {
+      Debug.LogError("Elevator script reference is null");
+    }
+  }
+
   private void Update() {
     if (_pressable) {
       MeshRenderer[] button = GetComponentsInChildren<MeshRenderer>();
@@ -19,6 +28,7 @@ public class ElevatorPanel : MonoBehaviour
             Player p = GameObject.Find("Player").GetComponent<Player>();
             if (p && p.Coins >= _coinAmount) {
               item.material.color = Color.green;
+              _elevator.InteractWithElevator();
             }
           }
         }
