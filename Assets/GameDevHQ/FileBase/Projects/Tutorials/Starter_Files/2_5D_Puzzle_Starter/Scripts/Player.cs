@@ -149,6 +149,14 @@ public class Player : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit) {
       if (hit.gameObject.tag == "Wall") {
         _lastWallHitNormal = hit.normal;
+        Debug.DrawRay(transform.position, hit.normal, Color.blue);
+      }
+
+      if (hit.gameObject.tag == "MovableBox") {
+        Rigidbody body = hit.gameObject.GetComponent<Rigidbody>();
+        if (body && hit.moveDirection.y == 0) {
+          body.velocity = new Vector3( hit.moveDirection.x * 2.0f, 0, 0);
+        }
       }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1755,7 +1755,7 @@ GameObject:
   - component: {fileID: 1276055930}
   m_Layer: 0
   m_Name: Movable_Box
-  m_TagString: Untagged
+  m_TagString: MovableBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1788,7 +1788,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &1276055931
 BoxCollider:
@@ -2393,6 +2393,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2920018042086297838, guid: 9cca65bc7f095424ba5c3b03a0951623, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920018042086297839, guid: 9cca65bc7f095424ba5c3b03a0951623, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3607593818387752167, guid: 9cca65bc7f095424ba5c3b03a0951623, type: 3}
       propertyPath: m_Name
       value: Moving_Platform
@@ -2838,7 +2846,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798249445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.19, y: 17.57, z: 0}
+  m_LocalPosition: {x: 14.73, y: 27.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
@@ -2875,6 +2883,7 @@ GameObject:
   - component: {fileID: 1868382301}
   - component: {fileID: 1868382304}
   - component: {fileID: 1868382302}
+  - component: {fileID: 1868382303}
   m_Layer: 0
   m_Name: Pressure_Pad
   m_TagString: Untagged
@@ -2910,6 +2919,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 10, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1868382303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868382300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9699e7e7d493e084e978547ee12f3359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &1868382304
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ElevatorLight
   - Wall
+  - MovableBox
   layers:
   - Default
   - TransparentFX
